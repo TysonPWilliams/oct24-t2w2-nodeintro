@@ -1,4 +1,6 @@
-import express from 'express'
+// import express from 'express'  // Import the default import
+import { Router } from 'express' // Destructures Router from within the default export
+import Post from '../models/post.js'
 
 // Default visibility of all module contents is private
 
@@ -18,13 +20,15 @@ const posts = [
   ]
 
 // Flask: Blueprint
-const router = express.Router()
+const router = Router()
 
 
 // Get all posts
-router.get('/posts', (req, res) => {
-    res.send(posts)
+router.get('/posts', async (req, res) => {
+    // res.send(posts)
+    res.send(await Post.find())
 })
+
 
 
 // Get one post
@@ -43,10 +47,18 @@ router.get('/posts/:id', (req, res) => {
     }
 })
 
-// Create a post
+// Create a post POST /posts
 router.post('/posts', (req, res) => {
-
+    // Get post data from the request body
+    const bodyData = req.body
+    console.log(bodyData)
+    // Create a new Post instance
+    // Commit new Post instance to DB
+    // Send _ to the client
+    res.send('POST /posts')
 })
+
+
 // Update a post
 // Delete a post
 
