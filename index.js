@@ -18,5 +18,5 @@ app.use(post_routes)
 // The callback is called when the server is running
 app.listen(port, async () => {
   console.log(`Example app listening on port ${port}`)
-  connect
+  connect()
 })

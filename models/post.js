@@ -3,9 +3,9 @@ import { model } from 'mongoose'
 // Flask: ORM (Object-Relational Mapper - SQLAlchemy)
 // Express: ODM (Object-Document Mapper - Mongoose)
 const Post = model('Post', {
-    title: String,
-    body: String,
-    isPublished: Boolean
+    title: { type: String, required: true },
+    body: { type: String, required: true },
+    isPublished: { type: Boolean, default: false }
 })
 
 export default Post

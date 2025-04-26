@@ -23,6 +23,8 @@ await Post.deleteMany()
 // Creates and saves to MongoDB a new Post for each document in posts array
 await Post.create(posts)
 console.log('Posts Created')
+
+// We still have a db connection open, so the script won't end
+// So we need to close the connection once we're done with it
 db.close()
 
-// We still have a db connection open
