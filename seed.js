@@ -1,5 +1,6 @@
 import db from './db.js'
 import Post from "./models/post.js"
+import Category from "./models/category.js"
 
 const posts = [
     {
@@ -16,7 +17,20 @@ const posts = [
     }
 ]
 
+const categories = [
+  { name: 'Food' },
+  { name: 'Coding' },
+  { name: 'Movies' },
+  { name: 'Other' },
+]
+
 db.connect()
+
+// Delete all existing categories
+await Category.deleteMany()
+// Creates and saves to MongoDB a new Post for each document in categories array
+await Category.create(categories)
+console.log('Categories Created')
 
 // Delete all existing posts
 await Post.deleteMany()
