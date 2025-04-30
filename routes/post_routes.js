@@ -2,6 +2,7 @@
 import { Router } from 'express' // Destructures Router from within the default export
 import Post from '../models/post.js'
 import { model } from 'mongoose'
+import Category from '../models/category.js'
 
 // Default visibility of all module contents is private
 
@@ -12,7 +13,17 @@ const router = Router()
 // Get all posts
 router.get('/posts', async (req, res) => {
     // res.send(posts)
-    res.send(await Post.find(req.query.draft ? {} : { isPublished: true}))
+    res.send(
+        await Post
+            // find() argument is selective with a ternary
+            // operator, so if req.query.draft is true, pass an empty filter (i.e. {})
+            // else, filter to include only published posts
+            .find(req.query.draft ? {} : { isPublished: true})
+            .populate({
+                path: 'category',
+                select: '-__v -_id'
+            })
+            .select('-__v'))
 })
 
 
@@ -23,7 +34,13 @@ router.get('/posts/:id', async (req, res) => {
     // 2. Get the ID of the post
     const post_id = req.params.id // All params values are strings
     // 3. Get the post with the given ID
-    const post = await Post.findOne({_id: post_id})
+    const post = await Post
+        .findOne({_id: post_id})
+        .populate({
+            path: 'category',
+            select: '-__v'
+        })
+        .select('-__v')
     
     // posts.find(p => p.id == post_id) // Using == means tpe coercion will happen
 
