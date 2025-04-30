@@ -2,6 +2,7 @@ import db from './db.js'
 import Post from "./models/post.js"
 import Category from "./models/category.js"
 
+// This script is used to seed the database with initial data
 
 const categories = [
   { name: 'Food' },
