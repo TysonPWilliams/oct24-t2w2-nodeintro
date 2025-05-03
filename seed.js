@@ -1,6 +1,7 @@
 import db from './db.js'
 import Post from "./models/post.js"
 import Category from "./models/category.js"
+import User from './models/user.js'
 
 // This script is used to seed the database with initial data
 
@@ -12,6 +13,9 @@ const categories = [
 ]
 
 db.connect()
+
+await User.deleteMany()
+console.log('Users erased')
 
 // Delete all existing categories
 await Category.deleteMany()

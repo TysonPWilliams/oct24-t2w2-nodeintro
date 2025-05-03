@@ -1,3 +1,4 @@
+import 'dotenv/config' // Load environment variables from .env file
 import express from 'express' // E6 Modules
 import helmet from 'helmet'
 import cors from 'cors'
@@ -5,6 +6,8 @@ import post_routes from './routes/post_routes.js'
 import category_routes from './routes/category_routes.js'
 import auth_routes from './routes/auth_routes.js'
 import { connect } from './db.js'
+
+// console.log(process.env) // Check if the environment variable is loaded correctly
 
 // const express = require('express') // CommonJS modules
 const app = express()
@@ -23,6 +26,13 @@ app.use(express.json())
 app.use(auth_routes)
 app.use(post_routes)
 app.use(category_routes)
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  // console.error(err.stack)
+  // console.log(err)
+  res.status(err.status).send({error: err.message})
+})
 
 
 // Start the dev server on the given port

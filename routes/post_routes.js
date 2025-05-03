@@ -1,8 +1,10 @@
 // import express from 'express'  // Import the default import
 import { Router } from 'express' // Destructures Router from within the default export
 import Post from '../models/post.js'
+import { expressjwt } from 'express-jwt'
 import { model } from 'mongoose'
 import Category from '../models/category.js'
+import { auth, adminOnly } from '../auth.js'
 
 // Default visibility of all module contents is private
 
@@ -11,8 +13,7 @@ const router = Router()
 
 
 // Get all posts
-router.get('/posts', async (req, res) => {
-    // res.send(posts)
+router.get('/posts', auth, adminOnly , async (req, res) => {
     res.send(
         await Post
             // find() argument is selective with a ternary
@@ -25,7 +26,6 @@ router.get('/posts', async (req, res) => {
             })
             .select('-__v'))
 })
-
 
 
 // Get one post
