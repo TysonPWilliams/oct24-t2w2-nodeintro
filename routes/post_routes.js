@@ -30,7 +30,7 @@ router.get('/posts', auth, adminOnly , async (req, res) => {
 
 // Get one post
 // 1. Declare the route
-router.get('/posts/:id', async (req, res) => {
+router.get('/posts/:id', auth, async (req, res) => {
     // 2. Get the ID of the post
     const post_id = req.params.id // All params values are strings
     // 3. Get the post with the given ID
@@ -53,7 +53,7 @@ router.get('/posts/:id', async (req, res) => {
 })
 
 // Create a post POST /posts
-router.post('/posts', async (req, res) => {
+router.post('/posts', auth, async (req, res) => {
     try {
         // Get post data from the request body
         const bodyData = req.body
@@ -84,11 +84,11 @@ async function update(req, res) {
     }
 }
 
-router.put('/posts/:id', update)
-router.patch('/posts/:id', update)
+router.put('/posts/:id', auth, update)
+router.patch('/posts/:id', auth, update)
 
 // Delete a post
-router.delete('/posts/:id', async (req, res) => {
+router.delete('/posts/:id', auth, async (req, res) => {
     const post = await Post.findByIdAndDelete(req.params.id)
     if (post) {
         // 4. Send the post to the client
